@@ -1,16 +1,16 @@
 version: '2.1'
 services:
 
-  module-demo-service:
-    image: registry.fit2cloud.com/fit2cloud2-extention/module-demo:latest
-    container_name: module-demo-service
+  module-demo:
+    image: registry.fit2cloud.com/north/module-demo:miao
+    container_name: module-demo
     volumes:
-      - share-volume:/opt/fit2cloud/share
-      - host-opt-fit2cloud-conf:/opt/fit2cloud/conf
-      - host-opt-fit2cloud-logs:/opt/fit2cloud/logs
-    mem_limit: 1024m
+    - share-volume:/opt/fit2cloud/share
+    - host-opt-fit2cloud-conf:/opt/fit2cloud/conf
+    - host-opt-fit2cloud-logs:/opt/fit2cloud/logs
     depends_on:
       management-center:
         condition: service_healthy
+    mem_limit: 1024m
     networks:
-      - cmp-network
+    - cmp-network

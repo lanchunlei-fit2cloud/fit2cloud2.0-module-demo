@@ -15,8 +15,12 @@ if [ "$has_eureka_enable_setting" -ne "0" ]; then
 fi
 echo "eureka.client.enabled=true" >> $property_file
 
-echo "$module_version=$version" >> $property_file
-image_url="registry.fit2cloud.com/fit2cloud2-extention/module-demo:latest"
+new_version=${version%.*}
+build_version=V$new_version.$BUILD_NUMBER
+echo "$module_version=$build_version" >> $property_file
+
+#echo "$module_version=$version" >> $property_file
+image_url="registry.fit2cloud.com/north/module-demo:miao"
 image_name=`echo $image_url | awk -F"/" '{ print $3 }'`
 image=`echo $image_name | awk -F":" '{ print $1 }'`
 
@@ -25,7 +29,7 @@ mvn clean package -U -Dmaven.test.skip=true
 
 echo "构建扩展模块镜像 ..."
 docker build -t $image_url .
-#docker push registry.fit2cloud.com/fit2cloud2-extention/security-scan:master
+#docker push registry.fit2cloud.com/north/module-demo:miao
 
 mkdir extension
 echo "导出扩展模块镜像 ..."
